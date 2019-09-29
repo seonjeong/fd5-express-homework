@@ -8,15 +8,9 @@
 <body>
 <h1>{{subject}}</h1>
 <ul>
-	<li>
-		<a href="/login">로그인</a>
-	</li>
-	<li>
-		<a href="/register">회원가입</a>
-	</li>
-    <li>
-        <a href="/users">회원목록</a>
-    </li>
+    {{#each userList}}
+        <li>{{email}} / {{name}}</li>
+    {{/each}}
 </ul>
 </body>
 </html>
