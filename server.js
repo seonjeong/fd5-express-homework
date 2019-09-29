@@ -37,7 +37,7 @@ app.get('/register', (req, res) => {
     });
 });
 
-console.log('git lorem');
+console.log('git lorem2');
 
 app.post('/login', (req, res) => {
     // 아래 로직을 구현하라.
