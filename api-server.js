@@ -28,5 +28,15 @@ app.get('/users', (req, res) => {
    res.send(userDB);
 });
 
+app.post('/register', (req, res) => {
+    userDB.push(req.body);
+    console.log(req.body);
+    res.send(true);
+});
+
+app.get('/user/:email', (req, res) => {
+    const user = userDB.find((user) => req.params.email === user.email);
+    res.send(user ? user : null);
+});
 
 app.listen(4001);

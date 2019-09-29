@@ -1,4 +1,4 @@
-const NumberUtils = require('./src/util/NumberUtils');
+const NumberUtils = require('../../util/NumberUtils');
 
 test('2개의 숫자를 받아 그 합을 반환한다', () => {
    expect(NumberUtils.sum(1, 2)).toBe(3);
