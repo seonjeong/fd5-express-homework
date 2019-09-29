@@ -9,7 +9,7 @@ app.set('views', `${__dirname}/views`);
 app.set('view engine', 'hbs');
 /** 설정 */
 
-
+console.log(3121321)
 const userDB = [{
     email: 'suho.kim2@gmail.com',
     password: '1234',
