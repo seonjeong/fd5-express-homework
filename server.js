@@ -1,4 +1,6 @@
 const express = require('express');
+const request = require('request');
+const NumberUtils = require('');
 const app = express();
 
 /** 설정(과제 하는데 중요치 않으니 신경 안써도 되는 부분.) */
@@ -10,13 +12,9 @@ app.set('view engine', 'hbs');
 /** 설정 */
 
 
-const userDB = [{
-    email: 'suho.kim2@gmail.com',
-    password: '1234',
-    name: '김수호'
-}];
 
 app.get('/', (req, res) => {
+    NumberUtils.sum()
     res.render('index', {
         title: '과제',
         subject: 'Hello'
@@ -35,6 +33,14 @@ app.get('/register', (req, res) => {
         title: '과제',
         subject: '회원가입'
     });
+});
+
+app.get('/users', (req, res) => {
+    request('http://loalhost:4001/users', (err,  response, body)=>{
+        res.render('users', {
+            userList: JSON.parse(body)
+        });
+    })
 });
 
 app.post('/login', (req, res) => {
@@ -67,5 +73,6 @@ app.post('/register', (req, res) => {
 
     res.redirect('/login');
 });
+
 
 app.listen(4000);
