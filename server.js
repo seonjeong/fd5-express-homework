@@ -23,6 +23,20 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/login', (req, res) => {
+    res.render('login', {
+        title: '과제',
+        subject: '로그인'
+    });
+});
+
+app.get('/register', (req, res) => {
+    res.render('register', {
+        title: '과제',
+        subject: '회원가입'
+    });
+});
+
 app.post('/login', (req, res) => {
     // 아래 로직을 구현하라.
     // 1. 클라이언트에서 전달한 email을 이용하여 userDB에서 찾는다.
