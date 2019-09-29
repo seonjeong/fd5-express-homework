@@ -43,6 +43,20 @@ app.post('/login', (req, res) => {
     // 2. 없으면 '회원이 아닙니다.' 출력
     // 3. 있고 비밀번호가 맞으면 'xxx님 안녕하세요 출력'
     // 4. 비밀번호가 틀리면 '비밀번호가 틀립니다.' 출력
+    var user = userDB;
+    var uname = req.body.username;//POST방식으로 보낸 값을 가져옴
+    var emails = req.body.email;//POST방식으로 보낸 값을 가져옴
+    var pwd = req.body.password;
+
+    if(uname === user.emails && pwd === user.password){//아이디와 패스워드 둘다 같으면
+
+        res.send('님 안녕하세요 출력');
+
+    }else{//비밀번호가 틀리면
+
+        res.send('비밀번호가 틀립니다.');
+
+    }
 
     console.log(req.body);
 });
