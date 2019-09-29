@@ -19,7 +19,7 @@ const userDB = [{
 app.get('/', (req, res) => {
     res.render('index', {
         title: '과제',
-        subject: 'Hello 과제'
+        subject: 'Hello'
     });
 });
 
