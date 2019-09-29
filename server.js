@@ -37,6 +37,7 @@ app.get('/register', (req, res) => {
     });
 });
 
+console.log(123123);
 app.post('/login', (req, res) => {
     // 아래 로직을 구현하라.
     // 1. 클라이언트에서 전달한 email을 이용하여 userDB에서 찾는다.
