@@ -1,6 +1,5 @@
 const express = require('express');
 const request = require('request');
-const NumberUtils = require('./src/util/NumberUtils');
 const app = express();
 
 /** 설정(과제 하는데 중요치 않으니 신경 안써도 되는 부분.) */
@@ -12,9 +11,6 @@ app.set('view engine', 'hbs');
 /** 설정 */
 
 app.get('/', (req, res) => {
-    NumberUtils.sum()
-
-
     res.render('index', {
         title: '과제',
         subject: 'Hello 과제'
