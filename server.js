@@ -1,4 +1,5 @@
 const express = require('express');
+const request = require('request');
 const app = express();
 
 /** 설정(과제 하는데 중요치 않으니 신경 안써도 되는 부분.) */
@@ -8,13 +9,6 @@ app.use(express.static('public'));
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'hbs');
 /** 설정 */
-
-
-const userDB = [{
-    email: 'suho.kim2@gmail.com',
-    password: '1234',
-    name: '김수호'
-}];
 
 app.get('/', (req, res) => {
     res.render('index', {
@@ -61,6 +55,14 @@ app.post('/register', (req, res) => {
         password: req.body.password
     });
     res.redirect('/login');
+});
+
+app.get('/users', (req, res) => {
+    request('http://localhost:4001/users', (err, response, body) => {
+        res.render('users', {
+            userList: JSON.parse(body)
+        });
+    });
 });
 
 app.listen(4000);
