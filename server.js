@@ -1,9 +1,5 @@
 const express = require('express');
 const request = require('request');
-<<<<<<< HEAD
-const NumberUtils = require('');
-=======
->>>>>>> master
 const app = express();
 
 /** 설정(과제 하는데 중요치 않으니 신경 안써도 되는 부분.) */
@@ -14,16 +10,12 @@ app.set('views', `${__dirname}/views`);
 app.set('view engine', 'hbs');
 /** 설정 */
 
-<<<<<<< HEAD
+const apiUri = 'http://localhost:4001/users';
 
-
-=======
->>>>>>> master
 app.get('/', (req, res) => {
-    NumberUtils.sum()
     res.render('index', {
         title: '과제',
-        subject: 'Hello'
+        subject: 'Hello 과제'
     });
 });
 
@@ -42,11 +34,11 @@ app.get('/register', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-    request('http://loalhost:4001/users', (err,  response, body)=>{
+    request(apiUri, (err, response, body) => {
         res.render('users', {
             userList: JSON.parse(body)
         });
-    })
+    });
 });
 
 app.post('/login', (req, res) => {
@@ -55,56 +47,54 @@ app.post('/login', (req, res) => {
     // 2. 없으면 '회원이 아닙니다.' 출력
     // 3. 있고 비밀번호가 맞으면 'xxx님 안녕하세요 출력'
     // 4. 비밀번호가 틀리면 '비밀번호가 틀립니다.' 출력
+    request(apiUri, (err, response, body) => {
+        const apiBody = JSON.parse(body);
+        const user = apiBody.find((user) => user.email === req.body.email);
+        if (!user) return res.send('회원이 아닙니다');
+        if (user.password !== req.body.password) return res.send('비번이 틀렸습니다');
 
-<<<<<<< HEAD
-    const user = userDB.find((user)=> user.email === req.body.email);
-
-    if(!user) return res.send('회원이 아닙니다.');
-    if(user.password !== req.body.password) return res.send('패스워드가 틀렸습니다.');
-
-    res.send(`${user.name}님 어서오세요`)
-
-=======
-    const user = userDB.find((user) => user.email === req.body.email);
-    if (!user) return res.send('회원이 아닙니다');
-    if (user.password !== req.body.password) return res.send('비번이 틀렸습니다');
-
-    res.send(`${user.name}님 어서오세요`);
->>>>>>> master
-    console.log(req.body);
+        res.send(`${user.name}님 어서오세요`);
+        console.log(req.body);
+    });
 });
 
+// app.post('/register', (req, res) => {
+//     // 아래 로직을 구현하라.
+//     // 1. userDB에 회원정보를 저장한다.
+//     userDB.push({
+//         email: req.body.email,
+//         name: req.body.name,
+//         password: req.body.password
+//     });
+//     res.redirect('/login');
+// });
 
+
+// const registerUser = (userData, cb) => {
+//     request(`http://localhost:4001/register`, {
+//         method: 'POST',
+//         form: userData
+//     }, (err, response, body) => {
+//         cb(body);
+//     });
+// };
 app.post('/register', (req, res) => {
-    // 아래 로직을 구현하라.
-    // 1. userDB에 회원정보를 저장한다.
-<<<<<<< HEAD
-
-    userDB.push({
-       email: req.body.email,
-       name: req.body.name,
-       password: req.body.password
+    request(`http://localhost:4001/register`, {
+        method: 'POST',
+        form: req.body
+    }, (err, response, body) => {
+        res(body);
     });
 
-    res.redirect('/login');
+
+
+    // registerUser(req.body, (result) => {
+    //     if (!result) return res.send('회원가입 실패');
+    //     res.redirect('/login');
+    // });
 });
 
-=======
-    userDB.push({
-        email: req.body.email,
-        name: req.body.name,
-        password: req.body.password
-    });
-    res.redirect('/login');
-});
 
-app.get('/users', (req, res) => {
-    request('http://localhost:4001/users', (err, response, body) => {
-        res.render('users', {
-            userList: JSON.parse(body)
-        });
-    });
-});
->>>>>>> master
+
 
 app.listen(4000);
