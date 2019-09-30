@@ -58,18 +58,6 @@ app.post('/login', (req, res) => {
     });
 });
 
-// app.post('/register', (req, res) => {
-//     // 아래 로직을 구현하라.
-//     // 1. userDB에 회원정보를 저장한다.
-//     userDB.push({
-//         email: req.body.email,
-//         name: req.body.name,
-//         password: req.body.password
-//     });
-//     res.redirect('/login');
-// });
-
-
 // const registerUser = (userData, cb) => {
 //     request(`http://localhost:4001/register`, {
 //         method: 'POST',
