@@ -40,12 +40,15 @@ app.post('/login', (req, res) => {
     // 3. 있고 비밀번호가 맞으면 'xxx님 안녕하세요 출력'
     // 4. 비밀번호가 틀리면 '비밀번호가 틀립니다.' 출력
 
-    const user = userDB.find((user) => user.email === req.body.email);
-    if (!user) return res.send('회원이 아닙니다');
-    if (user.password !== req.body.password) return res.send('비번이 틀렸습니다');
+    request('http://localhost:4001/users', (err, response, body) => {
+        const userDB = JSON.parse(body);
+        const user = userDB.find((user) => user.email === req.body.email);
+        if (!user) return res.send('회원이 아닙니다');
+        if (user.password !== req.body.password) return res.send('비번이 틀렸습니다');
+        res.send(`${user.name}님 어서오세요`);
+        console.log(req.body);
+    });
 
-    res.send(`${user.name}님 어서오세요`);
-    console.log(req.body);
 });
 
 app.post('/register', (req, res) => {
