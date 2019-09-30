@@ -37,23 +37,30 @@ app.post('/login', (req, res) => {
     // 2. 없으면 '회원이 아닙니다.' 출력
     // 3. 있고 비밀번호가 맞으면 'xxx님 안녕하세요 출력'
     // 4. 비밀번호가 틀리면 '비밀번호가 틀립니다.' 출력
+    request("http://localhost:4001/users", (err, response, body) => {
+        const user = JSON.parse(body).find((user) => user.email === req.body.email);
+        if (!user) return res.send('회원이 아닙니다');
+        if (user.password !== req.body.password) return res.send('비번이 틀렸습니다');
 
-    const user = userDB.find((user) => user.email === req.body.email);
-    if (!user) return res.send('회원이 아닙니다');
-    if (user.password !== req.body.password) return res.send('비번이 틀렸습니다');
-
-    res.send(`${user.name}님 어서오세요`);
-    console.log(req.body);
+        res.send(`${user.name}님 어서오세요`);
+        console.log(req.body);
+    });
 });
 
 app.post('/register', (req, res) => {
     // 아래 로직을 구현하라.
     // 1. userDB에 회원정보를 저장한다.
-    userDB.push({
-        email: req.body.email,
-        name: req.body.name,
-        password: req.body.password
-    });
+    const addUsers = {
+        uri: "http://localhost:4001/register",
+        method: "POST",
+        form: {
+            email: req.body.email,
+            name: req.body.name,
+            password: req.body.password
+        }
+    }
+
+    request(addUsers);
     res.redirect('/login');
 });
 
