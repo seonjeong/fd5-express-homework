@@ -27,10 +27,8 @@ const userDB = [{
 app.get('/users', (req, res) => {
    res.send(userDB);
 });
-app.get('/register', (req, res) => {
-    res.send('회원가입');
-});
 app.post('/register', (req, res)=>{
-    console.log(req.body);
+    userDB.push(req.body);
+    res.send('성공');
 });
 app.listen(4001);

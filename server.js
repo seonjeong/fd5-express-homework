@@ -10,7 +10,7 @@ app.set('views', `${__dirname}/views`);
 app.set('view engine', 'hbs');
 /** 설정 */
 
-const apiUri = 'http://localhost:4001/users';
+const apiUri = 'http://localhost:4001';
 
 app.get('/', (req, res) => {
     res.render('index', {
@@ -34,7 +34,7 @@ app.get('/register', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-    request(apiUri, (err, response, body) => {
+    request(`${apiUri}/users`, (err, response, body) => {
         res.render('users', {
             userList: JSON.parse(body)
         });
@@ -42,14 +42,8 @@ app.get('/users', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    // 아래 로직을 구현하라.
-    // 1. 클라이언트에서 전달한 email을 이용하여 userDB에서 찾는다.
-    // 2. 없으면 '회원이 아닙니다.' 출력
-    // 3. 있고 비밀번호가 맞으면 'xxx님 안녕하세요 출력'
-    // 4. 비밀번호가 틀리면 '비밀번호가 틀립니다.' 출력
-    request(apiUri, (err, response, body) => {
-        const apiBody = JSON.parse(body);
-        const user = apiBody.find((user) => user.email === req.body.email);
+    request(`${apiUri}/users`, (err, response, body) => {
+        const user = JSON.parse(body).find((user) => user.email === req.body.email);
         if (!user) return res.send('회원이 아닙니다');
         if (user.password !== req.body.password) return res.send('비번이 틀렸습니다');
 
@@ -58,31 +52,14 @@ app.post('/login', (req, res) => {
     });
 });
 
-// const registerUser = (userData, cb) => {
-//     request(`http://localhost:4001/register`, {
-//         method: 'POST',
-//         form: userData
-//     }, (err, response, body) => {
-//         cb(body);
-//     });
-// };
 app.post('/register', (req, res) => {
-    request(`http://localhost:4001/register`, {
+    request(`${apiUri}/register`,{
         method: 'POST',
         form: req.body
     }, (err, response, body) => {
-        res(body);
-    });
-
-
-
-    // registerUser(req.body, (result) => {
-    //     if (!result) return res.send('회원가입 실패');
-    //     res.redirect('/login');
-    // });
+        console.log(req.body);
+        res.redirect('/login');
+    })
 });
-
-
-
 
 app.listen(4000);
