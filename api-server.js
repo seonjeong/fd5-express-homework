@@ -28,5 +28,18 @@ app.get('/users', (req, res) => {
    res.send(userDB);
 });
 
+app.post('/register', (req, res) => {
+
+    const user = userDB.find((user) => user.email === req.body.email);
+    if (user) return res.status(409).send('이미 존재하는 회원입니다').end();
+
+    userDB.push({
+        email: req.body.email,
+        password: req.body.password,
+        name: req.body.name
+    });
+    res.end();
+});
+
 
 app.listen(4001);
