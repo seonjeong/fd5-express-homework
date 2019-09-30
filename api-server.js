@@ -24,6 +24,16 @@ const userDB = [{
     name: '김영희'
 }];
 
+app.post('/register', (req, res) => {
+    console.log('>>> req.body:', req.body);
+
+    userDB.push({
+        email: req.body.email,
+        name: req.body.name,
+        password: req.body.password
+    });
+});
+
 app.get('/users', (req, res) => {
    res.send(userDB);
 });
