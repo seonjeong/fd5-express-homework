@@ -28,6 +28,14 @@ app.get('/users', (req, res) => {
    res.send(userDB);
 });
 
+app.post('/login', (req, res) => {
+
+    const user = userDB.find((user) => user.email === req.body.email);
+    if (!user) return res.status(401).send('회원이 아닙니다');
+    if (user.password !== req.body.password) return res.status(401).send('비번이 틀렸습니다');
+    res.send(`${user.name}님 어서오세요`);
+});
+
 app.post('/register', (req, res) => {
 
     const user = userDB.find((user) => user.email === req.body.email);
