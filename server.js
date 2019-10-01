@@ -83,5 +83,6 @@ app.get('/users', (req, res) => {
         });
     });
 });
-
 app.listen(4000);
+
+module.exports = app;
